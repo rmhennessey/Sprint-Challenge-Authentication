@@ -26,7 +26,7 @@ class Jokes extends React.Component {
     axios
       .get(endpoint)
       .then(res => {
-        this.setState({ users: res.data });
+        this.setState({ jokes: res.data });
       })
       .catch(error => {
         console.error('USERS ERROR', error);

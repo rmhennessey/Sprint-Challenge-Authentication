@@ -16,7 +16,7 @@ class Login extends React.Component {
       .then(res => {
         console.log('SIGN UP RESPONSE', res);
         localStorage.setItem('token', res.data.token);
-        this.props.history.push('/users')
+        this.props.history.push('/jokes')
       })
       .catch(error => {
         console.error('LOGIN ERROR', error);
