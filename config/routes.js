@@ -20,7 +20,8 @@ function register(req, res) {
 
   Jokes.add(user)
     .then(saved => {
-      res.status(201).json(saved)
+      const token = generateToken(user);
+      res.status(201).json({saved, token })
     })
     .catch(error => {
       res.status(500).json(error);
