@@ -1,7 +1,8 @@
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
 
-const { authenticate } = require('../auth/authenticate');
+
+const { authenticate, generateToken } = require('../auth/authenticate');
 
 const Jokes = require('../jokes/jokes-model.js')
 
@@ -19,8 +20,7 @@ function register(req, res) {
 
   Jokes.add(user)
     .then(saved => {
-      const token = getJokes(user);
-      res.status(201).json({saved, token})
+      res.status(201).json(saved)
     })
     .catch(error => {
       res.status(500).json(error);
@@ -35,7 +35,7 @@ function login(req, res) {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
-        const token = getJokes(user);
+      const token = generateToken(user);
 
         res.status(200).json({
           message: `Welcome ${user.username}!`,
@@ -64,4 +64,5 @@ function getJokes(req, res) {
     .catch(err => {
       res.status(500).json({ message: 'Error Fetching Jokes', error: err });
     });
+
 }
